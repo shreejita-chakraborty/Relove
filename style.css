@@ -1,0 +1,371 @@
+*{
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+    /* font-family: Arial, Helvetica, sans-serif; */
+}
+html{
+    scroll-behavior: smooth;
+}
+a{
+    text-decoration:none;
+    color:black;
+}
+nav{
+    top:0;
+    right:0;
+    left:0;
+    position: fixed;
+    z-index:100;
+}
+#nav-bar {
+    display: flex;
+    width:100%vw;
+    align-items:center;  
+    background-image: linear-gradient(to right, #e0b89b, #f2b282);
+    justify-content: space-around;
+}
+#notlinks{
+    display:flex;
+    align-items:center;
+    gap:40px;
+}
+.search-div{
+    display:flex;
+    align-items:center;
+}
+#search-bar{
+    font-size:15px;
+    width:39vw;
+    border:1px solid rgb(207, 119, 92);
+    background-color:rgba(249, 227, 196, 0.897);
+    border-radius:10px;
+    padding:10px ;
+    border-top-right-radius: 0%;
+    border-bottom-right-radius: 0%;
+}
+#notlinks .glass{
+    border:2px solid rgb(207, 119, 92);
+    border-radius: 10px;
+    border-top-left-radius: 0%;
+    border-bottom-left-radius: 0%;
+    padding:10px;
+}
+#nav-links{
+    display:flex;
+    gap:4vw;
+    align-items: center;
+}
+#nav-links-a {
+    font-size:18px;
+    display:flex;
+    gap:3vw;
+}
+.links-nav{
+    transition: all 0.2s ease-in-out;
+}
+.links-nav:hover{
+    transform:scale(1.08);
+}
+.links-nav:active{
+    transform:scale(1.2);
+}
+#logo{
+    font-family:"Cedarville Cursive", cursive;
+    transition: all 0.3s ease;
+}
+#relove{
+    color:rgb(203, 31, 31);
+    margin-left: 15px;
+    font-size: 40px;
+}
+#login-register{
+    font-size: 17px;
+    border:1px solid black;
+    padding:10px;
+    text-align: center;
+    background-color: rgb(3, 3, 3);
+    color:white;
+    border-radius: 10px;
+    font-family:monospace;
+    transition:all 0.2s ease-in-out;
+}
+#user{
+    display:flex;
+    gap:19px;
+    align-items: center;
+}
+.user{
+    font-size: 30px;
+}
+
+#logo:hover{
+    transform:scale(1.08);
+}
+#login-register:hover{
+    transform:scale(1.02);
+    background-color: white;
+    color:black;
+    cursor:pointer;
+    
+}
+/* -------------------------------------nav end------------------------------------------ */
+
+
+/* ----------under nav--------- */
+section{
+    margin-left:40px;
+}
+
+.quote{
+    margin:0 0 60px 0;
+    font-family:arizonia;
+    font-size:55px;
+}
+.discover{
+    margin-left:50px;
+    margin-bottom:20px;
+}
+.location-div{
+    display:flex;
+    align-items: center;
+    gap:13px;
+}
+#location{
+    margin-left: 70px;
+}
+.location-icon {
+    color:rgb(179, 40, 40);
+}
+#select-location{
+    padding:15px 30px;
+    background-color: transparent;
+    border: 2px solid rgb(137, 110, 74);
+    border-radius: 20px;
+    font-size: 15px;
+    transition:all 0.2s ease-in-out;
+}
+#select-location:hover{
+    cursor:pointer;
+    transform:scale(1.01);
+    box-shadow: 1px 1px 6px  black ;
+}
+.under-nav{
+    display:flex;
+    align-items: center;
+    gap:80px;
+}
+
+#under-nav-right{
+    margin-top:140px;
+}
+#under-nav-right h4{
+    color:rgb(173, 168, 168);
+}
+#under-nav-right img{
+    height:400px;
+    width:600px;
+} 
+.featured-stores{
+    border-radius: 20px;
+    line-height: 30px;
+    display:flex;
+    flex-direction: column; 
+    justify-content: space-evenly;
+    transition: all 0.3s ease-in;
+}
+.featured-stores:hover{
+    transform: scale(1.01);
+}
+.sale-price{
+    color:green;
+}
+/* ------- under nav end-------- */
+
+
+
+/* -------Bookstores near you----- */
+.explore-store-h1{
+    font-size: 35px;
+}
+.explore-bookstores{
+    margin-top:50px;
+    margin-bottom: 100px;
+}
+.explore-clothstores
+{
+    margin-bottom: 150px;
+}
+.select-range{
+    padding:12px 15px;
+    background-color: transparent;  
+    border: 2px solid rgb(137, 110, 74);
+    border-radius: 20px;
+    font-size: 15px;
+    transition:all 0.2s ease-in-out;
+}
+
+ .stores-near-you .right-arrow{
+    margin:0 50px 0 -5px;
+    font-size: 15px;
+}
+.stores-near-you{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    text-align: center;
+    margin-left: 50px;
+    margin-bottom: 30px;
+}
+.stores-near-you-left{
+    display:flex;
+    gap:20px;
+}
+.select-range:hover{
+    cursor:pointer;
+    transform:scale(1.01);
+    box-shadow: 1px 1px 6px  black ;
+}
+#store-cards{
+    display:flex;
+    align-items: center;
+    gap:10vw;
+    scrollbar-width: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-left:6vw;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-top: -15px;
+    margin-bottom: -15px;    
+}
+.stores{
+    width:20vw;
+    height:50vh;
+    padding:0.5vw;
+    box-shadow: 1px 1px 2px gray;
+    border-radius: 20px;
+    display:flex;
+    flex-direction: column;
+    gap:5px;
+    justify-content: space-evenly;
+    align-items: center;
+    transition: 0.3s ease-in-out;
+
+}
+.star{
+    color:rgb(247, 226, 41);
+}
+.rating{
+    font-weight: 100;
+    color:gray;
+    font-size: 18px;
+}
+
+.closed{
+    color:red;
+}
+.distance{
+    color:rgb(106, 100, 100);
+}
+.stores img{
+    height:30vh;
+    width:17vw;
+    border-radius: 10px;
+}
+.stores:hover{
+    box-shadow: 1px 5px 10px gray;
+    transform: scale(1.02);
+}
+.view-store{
+    padding:10px 18px;
+    font-size: 14px;
+    border:none;
+    color:white;
+    background-color:rgb(38, 129, 220) ;
+    border-radius: 20px;
+}
+.view-store:hover,.featured-stores{
+    cursor:pointer;
+}
+.view-all{
+    white-space: nowrap;
+    color:rgb(0, 113, 227);
+    font-size: large;
+    margin-right: 30px;
+    margin-left: -7vw;
+}
+.right-arrow{
+    font-size: 15px;
+}
+.view-all:hover{
+    text-decoration: underline;
+}
+/* -------stores near you end --------- */
+
+/* -------sustainability impact start------- */
+.impact-matters{
+    margin-left: 50px;
+    font-size: 40px;
+    margin-bottom: 70px;
+}
+.impacts-div{
+    display:flex;
+    align-items:center ;
+    gap:30px;
+}
+
+.impacts-div-container{
+    margin-left:90px;
+    display: flex;
+    flex-direction: column;
+    gap:70px;
+}
+.section-2{
+    line-height: 40px;
+}
+.impact-icons{
+    color: green;
+    font-size: 6vh;
+    padding:10px;
+    background-color: rgb(242, 230, 230);
+    border-radius: 100%;
+}
+.impact-statistics{
+    color:green;
+    font-size:32px;
+}
+.impact-sentence{
+    color:grey;
+    font-size: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ---------------------------------footer------------------------------------ */
+footer{
+    width:100%;
+    height:89px;
+    background-color: rgb(249, 244, 241);
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    color:gray;
+    margin-top:50px;
+    
+}
+ #footer{
+    font-size:larger;
+} 
+/* ---------------------------------- footer end-------------------------------- */
+
+
