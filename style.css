@@ -109,30 +109,30 @@ nav{
     cursor:pointer;
     
 }
+#login-register:active{
+    transform:scale(1.05);
+    opacity:0.9;
+}
 /* -------------------------------------nav end------------------------------------------ */
 
 
 /* ----------under nav--------- */
-section{
+#section-1{
     margin-left:40px;
 }
-
 .quote{
-    margin:0 0 60px 0;
     font-family:arizonia;
-    font-size:55px;
+    max-width:40vw;
+    font-size:88px;
+    margin-bottom:70px;
 }
 .discover{
-    margin-left:50px;
     margin-bottom:20px;
 }
 .location-div{
     display:flex;
     align-items: center;
     gap:13px;
-}
-#location{
-    margin-left: 70px;
 }
 .location-icon {
     color:rgb(179, 40, 40);
@@ -152,12 +152,9 @@ section{
 }
 .under-nav{
     display:flex;
+    margin-top: 150px;
     align-items: center;
-    gap:80px;
-}
-
-#under-nav-right{
-    margin-top:140px;
+    justify-content: space-around;
 }
 #under-nav-right h4{
     color:rgb(173, 168, 168);
@@ -177,7 +174,7 @@ section{
 .featured-stores:hover{
     transform: scale(1.01);
 }
-.sale-price{
+.price{
     color:green;
 }
 /* ------- under nav end-------- */
@@ -189,7 +186,7 @@ section{
     font-size: 35px;
 }
 .explore-bookstores{
-    margin-top:50px;
+    margin-top:100px;
     margin-bottom: 100px;
 }
 .explore-clothstores
@@ -253,6 +250,10 @@ section{
     transition: 0.3s ease-in-out;
 
 }
+.store-name{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight:100;
+}
 .star{
     color:rgb(247, 226, 41);
 }
@@ -314,42 +315,69 @@ section{
     align-items:center ;
     gap:30px;
 }
-
+.sustainability-impacts{
+background-color:darkgreen;
+margin-bottom: 50px;
+}
 .impacts-div-container{
-    margin-left:90px;
+    height:13vh;
     display: flex;
-    flex-direction: column;
-    gap:70px;
+    justify-content: space-around;
 }
 .section-2{
-    line-height: 40px;
+    line-height: 25px;
 }
 .impact-icons{
     color: green;
-    font-size: 6vh;
+    font-size: 3vh;
     padding:10px;
     background-color: rgb(242, 230, 230);
     border-radius: 100%;
 }
 .impact-statistics{
-    color:green;
-    font-size:32px;
+    color:rgb(57, 208, 57);
+    font-size:25px;
 }
 .impact-sentence{
-    color:grey;
-    font-size: 20px;
+    color:white;
 }
-
-
-
-
-
-
-
-
-
-
-
+.faq span{
+    font-style: italic;
+    font-weight: bold;
+}
+.faq h2{
+    font-size:51px;
+    font-weight:100;
+    text-align: center;
+    margin-bottom: 5vh;
+}
+.faq{
+    margin-top:100px;
+    margin-left: 50%;
+    transform: translate(-50%, 0);
+    width:40vw;
+}
+.faq summary{
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom:15px;
+    list-style: none;
+    font-size: 22px;
+}
+.faq summary:hover{
+    color:#e86603;
+}
+.faq-a{
+    font-family:Arial, Helvetica, sans-serif;
+}
+.faq-item{
+    border-bottom: 1px solid gray;
+    line-height: 1.5;
+    padding:20px 0;
+    
+}
 
 /* ---------------------------------footer------------------------------------ */
 footer{
