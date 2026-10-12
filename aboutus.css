@@ -1,0 +1,108 @@
+section{
+    margin-top:150px;
+}
+.aboutus-section-1{
+    width:86vw;
+    margin-left:50%;
+    transform:translate(-50%,0);
+}
+.aboutus-image{
+    height:80vh;
+}
+.aboutus-content{
+    display:flex;
+    gap:3vw;
+    align-items:center;
+}
+.aboutus-right h1{
+    font-size:50px;
+    font-family: asset; 
+    margin-bottom: 20px;
+}
+.aboutus-right h1 span{
+    color:brown;
+
+}
+.aboutus-text{
+    color:rgb(5, 21, 81);
+    font-size:22px;
+    font-family:monospace;
+    padding:20px 20px;
+    border:5px solid rgb(148, 17, 39);
+    font-weight:bold;
+    box-shadow: 12px 5px 2px gray;
+}
+.aboutus-text span{
+    font-size:18px;
+    color:rgb(78, 74, 74);
+}
+
+.aboutus-section-2{
+    width:86vw;
+    margin-left:50%;
+    transform:translate(-50%,0);
+}
+.garage-to-galaxy {
+  display: flex;
+  border: 4px solid #1d1b38;
+  color: #f8f7ff;
+}
+.garage-to-galaxy .left-panel {
+  background-color:rgb(205, 76, 98);
+  padding: 76px 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border-right: 5px solid #1d1b38;
+}
+
+.garage-to-galaxy .est-label {
+  background: #1d1b38;
+  color: #ffffff;
+  padding: 6px 10px;
+  font-family: "Space Mono", monospace;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+.garage-to-galaxy .left-panel h1 {
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(32px, 3vw, 42px);
+  line-height: 1.2;
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  color: #ffffff;
+  max-width: 900px;
+  margin: 0 0 34px;
+}
+
+.garage-to-galaxy .left-panel p {
+  font-family: "Space Mono", monospace;
+  font-size: 21px;
+  line-height: 1.65;
+  font-weight: 400;
+  max-width: 450px;
+  color: #f8f7ff;
+}
+.garage-to-galaxy .right-panel {
+  flex: 1;
+  min-width: 0;
+  color: #373550;
+  padding: 62px 60px;
+  display: flex;
+  flex-direction: column;
+}
+.garage-to-galaxy .story {
+  font-family: "Space Mono", monospace;
+  font-size: 18px;
+  line-height: 1.65;
+  font-weight: 700;
+  color: #373550;
+}
+
+.garage-to-galaxy .story p {
+  margin: 0 0 30px;
+}
+
