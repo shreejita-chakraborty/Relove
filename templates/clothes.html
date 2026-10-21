@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="Relove-favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='clothes.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arizonia&family=Cedarville+Cursive&display=swap" rel="stylesheet">
+    <link rel="icon" href="../static/images/Relove-favicon.png" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/cad521f4a5.js" crossorigin="anonymous"></script>
+    <title>ReLove/Books</title>
+</head>
+<body>
+    <nav>
+        <div id="nav-bar">
+            <div id="notlinks">
+                <h1 id="logo"><a id="relove" href="#home">ReLove</a></h1>
+                <div class="search-div">
+                    <input type="text" id="search-bar"  placeholder="Search for books, clothes, shops....">
+                    <i class="fa-solid fa-magnifying-glass glass"></i>
+                </div>
+            </div>
+            <div id="nav-links">
+                <div id="nav-links-a">
+                    <a  class="links-nav" href="index.html">Home</a>
+                    <a  class="links-nav" href="books.html">Books</a>
+                    <a  class="links-nav current-link" href="clothes.html">Clothes</a>
+                    <a class="links-nav" href="aboutus.html">About Us</a>
+                </div>
+                <div id="user">
+                                    
+                {% if session.get('user_id') %}
+                    <span class="welcome-user">
+                        Welcome
+                    </span>
+
+                    <form action="{{ url_for('logout') }}" method="POST"
+                        style="display: inline;">
+                        <button type="submit" class="login-register">
+                            Logout
+                        </button>
+                    </form>
+                {% else %}
+                    <button id="loginbtn" class="login-register">
+                        Login/Register
+                    </button>
+                {% endif %}
+
+                    <i class="fa-regular fa-circle-user user"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <header>
+    <div class="categories">
+        <a href="#" class="clothes-filter active" data-filter="">All</a>
+        <a href="#" class="clothes-filter" data-filter="mens">Men's</a>
+        <a href="#" class="clothes-filter" data-filter="womens">Women's</a>
+        <a href="#" class="clothes-filter" data-filter="unisex">Unisex</a>
+        <a href="#" class="clothes-filter" data-filter="partywear">Partywear</a>
+        <a href="#" class="clothes-filter" data-filter="casual">Casual</a>
+        <a href="#" class="clothes-filter" data-filter="formal">Formal</a>
+        <a href="#" class="clothes-filter" data-filter="accessories">Accessories</a>
+    </div>
+    </header>
+
+    <section class="clothes-section-1">
+        <div class="clothes-section-1-upper">
+            <div class="clothes-sell-description">
+                <h2>Want to Sell Your Clothes?</h2>
+                <h5>Turn the clothes rotting in your closet into cash and rewards!</h5>
+            </div>
+            <div class="process-image-wrapper">
+                <img src="https://peakpursuitsmarketplace.com/wp-content/uploads/2026/07/ChatGPT-Image-Jul-18-2026-08_37_07-PM-1024x576.webp" alt="clothes-image" class="process-image">
+            </div>
+        </div>
+        <div class="process">
+            <h1>How it works</h1>
+            <div class="how-it-works">
+                <div class="process-step">
+                    <i class="fa-solid fa-shirt process-step-icon"></i>
+                    <div class="process-step-description">
+                        <h3>01. Find a Nearby Partner Store</h3>
+                        <p>Explore ReLove-listed clothing stores near you and choose a convenient location.</p>
+                    </div>
+                </div>
+                <div class="timeline-line"></div>
+                <div class="process-step">
+                    <i class="fa-solid fa-shirt process-step-icon"></i>
+                    <div class="process-step-description">
+                        <h3>02. Bring Your Old Clothes</h3>
+                        <p>Take your clothes to the selected store for a condition check and valuation.</p>
+                    </div>
+                </div>
+                <div class="timeline-line"></div>
+                <div class="process-step">
+                    <i class="fa-solid fa-shirt process-step-icon"></i>
+                    <div class="process-step-description">
+                        <h3>03. Earn Cash + ReLove Points</h3>
+                        <p>If the store accepts your clothes, receive its agreed cash value and earn ReLove Points per kg.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="clothes-section-2">
+        <div class="explore-clothing-stores">
+            <div class="stores-near-you">
+                <div class="stores-near-you-left">
+                    <h1 class="explore-store-h1">Relove Clothing Stores Near You</h1>
+                    <button class="select-range">
+                        Select Range <i class="fa-solid fa-angle-down"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="store-cards">
+                {% for shop in shops %}
+                    <div class="stores">
+                        <img
+                            src="{{ url_for('static', filename='images/stores/cloth-shop-' ~ shop['id'] ~ '.jpg') }}"
+                            alt="{{ shop['shop_name'] }}"
+                            class="store-image"
+                        >  
+                        <h4 class="store-name">
+                            {{ shop['shop_name'] }}
+                        </h4>
+                        <p class="distance">{{ shop['shop_address'] }}</p>
+                        <p class="closed">Status unavailable</p>
+                        <a href="{{ url_for('view_store', shop_id=shop['id']) }}"
+                        class="view-store">
+                            View Store <i class="fa-solid fa-angle-right right-arrow"></i>
+                        </a>
+                    </div>
+                {% else %}
+                    <p>No shops registered yet.</p>
+                {% endfor %}
+            </div>
+             <a  class="view-less" href="clothes.html">View less <i class="fa-solid fa-angle-up"></i></a>
+        </div>
+    </section>
+    <section   id="books-section-3">
+        <div class="under-header">
+            <h1>Trending <i class="fa-solid fa-arrow-trend-up"></i> </h1>
+            <div class="trending-cards">
+                {% for product in products %}
+                <div class="trending-items"
+                    data-title="{{ product['name']|lower }}"
+                    data-genre="{{ (product['clothing_type'] or '')|lower }}"
+                    data-price="{{ product['price'] }}">
+                    {% if product["image"] %}
+                    <img
+                        src="{{ url_for('static', filename='images/products/' + product['image']) }}"
+                        alt="{{ product['name'] }}"
+                    >
+                    {% endif %}
+                    <p class="size">{{ product["size"] or "Size N/A" }}</p>
+                    <div class="details">
+                        <div class="name-price">
+                            <h3 class="clothing-name">{{ product["name"] }}</h3>
+                            <p class="price">₹{{ product["price"] }}</p>
+                        </div>
+                        <div class="more-details">
+                            <p class="condition">{{ product["description"] or "Preloved clothing" }}</p>
+                            <p class="distance">{{ product["shop_name"] }}</p>
+                        </div>
+                        <div class="stores-button">
+                            <button class="addtocart" type="button">
+                                Add to Cart
+                                <i class="fa-solid fa-cart-shopping cart"></i>
+                            </button>
+                            <a class="view-store"
+                            href="{{ url_for('view_store', shop_id=product['shop_id']) }}">
+                                View Store
+                                <i class="fa-solid fa-angle-right right-arrow"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <p>No clothing products available yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <section id="books-section-4">
+        <div class="under-header">
+            <h1>Recently Added <i class="fa-solid fa-layer-group"></i> </h1>
+            <div class="recently-added-cards">
+                    {% for product in products %}
+                <div class="trending-items"
+                    data-title="{{ product['name']|lower }}"
+                    data-genre="{{ (product['clothing_type'] or '')|lower }}"
+                    data-price="{{ product['price'] }}">
+                    {% if product["image"] %}
+                    <img
+                        src="{{ url_for('static', filename='images/products/' + product['image']) }}"
+                        alt="{{ product['name'] }}"
+                    >
+                    {% endif %}
+                    <p class="size">{{ product["size"] or "Size N/A" }}</p>
+                    <div class="details">
+                        <div class="name-price">
+                            <h3 class="clothing-name">{{ product["name"] }}</h3>
+                            <p class="price">₹{{ product["price"] }}</p>
+                        </div>
+                        <div class="more-details">
+                            <p class="condition">{{ product["description"] or "Preloved clothing" }}</p>
+                            <p class="distance">{{ product["shop_name"] }}</p>
+                        </div>
+                        <div class="stores-button">
+                            <button class="addtocart" type="button">
+                                Add to Cart
+                                <i class="fa-solid fa-cart-shopping cart"></i>
+                            </button>
+                            <a class="view-store"
+                            href="{{ url_for('view_store', shop_id=product['shop_id']) }}">
+                                View Store
+                                <i class="fa-solid fa-angle-right right-arrow"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <p>No clothing products available yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <section id="books-section-5">
+        <div class="under-header">
+            <h1>Recommended for you  <i class="fa-regular fa-heart"></i> </h1>
+            <div class="recently-added-cards">
+                    {% for product in products %}
+                <div class="trending-items"
+                    data-title="{{ product['name']|lower }}"
+                    data-genre="{{ (product['clothing_type'] or '')|lower }}"
+                    data-price="{{ product['price'] }}">
+                    {% if product["image"] %}
+                    <img
+                        src="{{ url_for('static', filename='images/products/' + product['image']) }}"
+                        alt="{{ product['name'] }}"
+                    >
+                    {% endif %}
+                    <p class="size">{{ product["size"] or "Size N/A" }}</p>
+                    <div class="details">
+                        <div class="name-price">
+                            <h3 class="clothing-name">{{ product["name"] }}</h3>
+                            <p class="price">₹{{ product["price"] }}</p>
+                        </div>
+                        <div class="more-details">
+                            <p class="condition">{{ product["description"] or "Preloved clothing" }}</p>
+                            <p class="distance">{{ product["shop_name"] }}</p>
+                        </div>
+                        <div class="stores-button">
+                            <button class="addtocart" type="button">
+                                Add to Cart
+                                <i class="fa-solid fa-cart-shopping cart"></i>
+                            </button>
+                            <a class="view-store"
+                            href="{{ url_for('view_store', shop_id=product['shop_id']) }}">
+                                View Store
+                                <i class="fa-solid fa-angle-right right-arrow"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <p>No clothing products available yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    
+
+
+
+    <footer>
+        <p id="footer">&copy; 2026 ReLove. All rights reserved.</p>
+    </footer>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

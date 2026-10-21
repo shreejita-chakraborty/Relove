@@ -1,0 +1,535 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../static/images/Relove-favicon.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap" rel="stylesheet">
+    <title>Login / Register | ReLove</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f0ea;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            color: #171717;
+        }
+        .login-container {
+            width: 100%;
+            max-width: 650px; 
+            background: white;
+            padding: 45px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            }
+        .logo {
+            font-family: "Cedarville Cursive", cursive;
+            font-size: 40px;
+            font-weight: normal;
+            color: rgb(203, 31, 31);
+            margin-bottom: 10px;
+            }
+        .heading h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        .heading p {
+            color: #777;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+        .toggle-container {
+            display: flex;
+            background: #f0f0f0;
+            padding: 5px;
+            border-radius: 10px;
+            margin-bottom: 28px;
+            gap: 5px;
+        }
+        .toggle-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            color: #555;
+            border-radius: 7px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+        }
+        .toggle-btn.active {
+            background: #171717;
+            color: white;
+        }
+        .section-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .account-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        .account-option {
+            padding: 17px 12px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            text-align: left;
+            transition: border-color 0.25s,
+                        background 0.25s,
+                        transform 0.25s;
+        }
+        .account-option:hover {
+            transform: translateY(-2px);
+            border-color: #777;
+        }
+        .account-option.active {
+            border: 2px solid #171717;
+            background: #f8f8f8;
+        }
+        .shop,.user {
+            display: block;
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+        .account-option strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        .account-option small {
+            color: #777;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+            font-family: inherit;
+            transition: border-color 0.25s,
+                        box-shadow 0.25s;
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #171717;
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+        }
+        .hidden {
+            display: none !important;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #171717;
+            color: white;
+            border: 1px solid #171717;
+            border-radius: 9px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s,
+                        color 0.3s;
+            margin-top: 5px;
+        }
+        .submit-btn:hover {
+            background: white;
+            color: #171717;
+        }
+        .message {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            background: #f0f0f0;
+            font-size: 13px;
+            line-height: 1.5;
+            display: none;
+        }
+        .footer-text {
+            margin-top: 22px;
+            text-align: center;
+            color: #888;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 24px 20px;
+            }
+
+            .heading h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo"> ReLove</div>
+        <div class="heading">
+            <h1 id="headingTitle">Welcome back.</h1>
+            <p id="headingDescription">
+                Your next great find is waiting for you.
+            </p>
+        </div>
+        <div class="toggle-container">
+            <button
+                type="button"
+                class="toggle-btn active"
+                id="loginTab"
+            >
+                Login
+            </button>
+
+            <button
+                type="button"
+                class="toggle-btn"
+                id="registerTab"
+            >
+                Register
+            </button>
+        </div>
+        <p class="section-label">I am using ReLove as a...</p>
+
+        <div class="account-options">
+
+            <button
+                type="button"
+                class="account-option active"
+                id="customerOption"
+            >
+                <i class="fa-solid fa-user emoji"></i>
+                <strong>Customer</strong>
+                <small>Discover nearby items</small>
+            </button>
+
+            <button
+                type="button"
+                class="account-option"
+                id="shopOption"
+            >
+                <i class="fa-solid fa-shop shop"></i>
+                <strong>Shop owner</strong>
+                <small>List your products</small>
+            </button>
+
+        </div>
+        <form id="authForm">
+
+            <div class="form-group hidden" id="nameGroup">
+                <label for="fullName">Full name</label>
+                <input
+                    type="text"
+                    id="fullName"
+                    placeholder="Enter your full name"
+                    autocomplete="name"
+                >
+            </div>
+
+            <div class="form-group hidden" id="shopNameGroup">
+                <label for="shopName">Shop name</label>
+                <input
+                    type="text"
+                    id="shopName"
+                    placeholder="Enter your shop name"
+                    autocomplete="organization"
+                >
+            </div>
+            <div class="form-group hidden" id="gstGroup">
+                <label for="gstNumber">GSTIN (if applicable)</label>
+                <input
+                    type="text"
+                    id="gstNumber"
+                    placeholder="Enter your GSTIN"
+                    maxlength="15"
+                    style="text-transform: uppercase;"
+                >
+            </div>
+            <div class="form-group hidden" id="categoryGroup">
+                <label for="shopCategory">Shop category</label>
+                <select id="shopCategory">
+                    <option value="books">Books</option>
+                    <option value="clothes">Clothes</option>
+                </select>
+            </div>
+            <div class="form-group hidden" id="addressGroup">
+                <label for="shopAddress">Shop address</label>
+                <input
+                    type="text"
+                    id="shopAddress"
+                    placeholder="Enter your shop address"
+                    autocomplete="street-address"
+                >
+            </div>
+            <div class="form-group hidden" id="phoneGroup">
+                <label for="phone">Contact number</label>
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="Enter your contact number"
+                    autocomplete="tel"
+                >
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                    required
+                >
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                    minlength="8"
+                >
+            </div>
+            <div class="form-group hidden" id="confirmGroup">
+                <label for="confirmPassword">Confirm password</label>
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Re-enter your password"
+                    autocomplete="new-password"
+                >
+            </div>
+            <button type="submit" class="submit-btn" id="submitBtn">
+                Login to ReLove →
+            </button>
+            <div class="message" id="message" role="status"></div>
+        </form>
+        <p class="footer-text">
+            By continuing, you agree to our Terms &amp; Privacy Policy.
+        </p>
+
+    </div>
+
+    <script>
+        const loginTab = document.getElementById("loginTab");
+        const registerTab = document.getElementById("registerTab");
+
+        const customerOption = document.getElementById("customerOption");
+        const shopOption = document.getElementById("shopOption");
+
+        const headingTitle = document.getElementById("headingTitle");
+        const headingDescription = document.getElementById("headingDescription");
+
+        const submitBtn = document.getElementById("submitBtn");
+        const authForm = document.getElementById("authForm");
+        const message = document.getElementById("message");
+        let currentMode = "login";
+        let currentRole = "customer";
+        const nameGroup = document.getElementById("nameGroup");
+        const shopNameGroup = document.getElementById("shopNameGroup");
+        const gstGroup = document.getElementById("gstGroup");
+        const addressGroup = document.getElementById("addressGroup");
+        const categoryGroup = document.getElementById("categoryGroup");
+        const shopCategory = document.getElementById("shopCategory");
+        const phoneGroup = document.getElementById("phoneGroup");
+        const confirmGroup = document.getElementById("confirmGroup");
+
+        const fullName = document.getElementById("fullName");
+        const shopName = document.getElementById("shopName");
+        const shopAddress = document.getElementById("shopAddress");
+        const phone = document.getElementById("phone");
+        const confirmPassword = document.getElementById("confirmPassword");
+        function setField(group, input, visible, required = false) {
+            group.classList.toggle("hidden", !visible);
+            input.required = visible && required;
+        }
+        function updateForm() {
+
+            const isRegister = currentMode === "register";
+            const isShop = currentRole === "shop";
+            loginTab.classList.toggle("active", !isRegister);
+            registerTab.classList.toggle("active", isRegister);
+
+            customerOption.classList.toggle("active", !isShop);
+            shopOption.classList.toggle("active", isShop);
+            if (isRegister) {
+                headingTitle.textContent = "Create your account.";
+                headingDescription.textContent = isShop
+                    ? "Bring your shop to ReLove."
+                    : "Join the ReLove community.";
+                submitBtn.textContent = "Create Account →";
+            } else {
+                headingTitle.textContent = "Welcome back.";
+                headingDescription.textContent = isShop
+                    ? "Log in to manage your shop."
+                    : "Your next great find is waiting for you.";
+                submitBtn.textContent = "Login to ReLove →";
+            }
+            setField(nameGroup, fullName, isRegister, true);
+            setField(
+                shopNameGroup,
+                shopName,
+                isRegister && isShop,
+                true
+            );
+            gstGroup.classList.toggle("hidden", !(isRegister && isShop));
+            categoryGroup.classList.toggle("hidden",
+            !(isRegister && isShop)
+            );
+            setField(
+                addressGroup,
+                shopAddress,
+                isRegister && isShop,
+                true
+            );
+            setField(
+                phoneGroup,
+                phone,
+                isRegister && isShop,
+                true
+            );
+            setField(
+                confirmGroup,
+                confirmPassword,
+                isRegister,
+                true
+            );
+            document.getElementById("password").autocomplete =
+                isRegister ? "new-password" : "current-password";
+
+            message.style.display = "none";
+        }
+        loginTab.addEventListener("click", function () {
+            currentMode = "login";
+            updateForm();
+        });
+
+        registerTab.addEventListener("click", function () {
+            currentMode = "register";
+            updateForm();
+        });
+
+        customerOption.addEventListener("click", function () {
+            currentRole = "customer";
+            updateForm();
+        });
+
+        shopOption.addEventListener("click", function () {
+            currentRole = "shop";
+            updateForm();
+        });
+        
+authForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (currentMode === "register" && password !== confirmPassword.value) {
+        message.textContent = "Your passwords do not match.";
+        message.style.display = "block";
+        confirmPassword.focus();
+        return;
+    }
+
+    const data = {
+        email: email,
+        password: password,
+        role: currentRole
+    };
+
+    if (currentMode === "register") {
+        data.fullName = fullName.value.trim();
+
+        if (currentRole === "shop") {
+            data.shopName = shopName.value.trim();
+            data.shopCategory = shopCategory.value;
+            data.gstNumber = document.getElementById("gstNumber").value.trim();
+            data.shopAddress = shopAddress.value.trim();
+            data.phone = phone.value.trim();
+        }
+    }
+
+    const endpoint = currentMode === "register"
+        ? "/api/register"
+        : "/api/login";
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Please wait...";
+
+    try {
+        const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        message.textContent = result.message;
+        message.style.display = "block";
+
+        if (response.ok && currentMode === "login") {
+            window.location.href = result.redirect;
+            return;
+        }
+
+        if (response.ok && currentMode === "register") {
+            authForm.reset();
+            currentMode = "login";
+            updateForm();
+
+            message.textContent = result.message;
+            message.style.display = "block";
+        }
+
+    } catch (error) {
+        message.textContent =
+            "Could not connect to the server. Please try again.";
+        message.style.display = "block";
+    } finally {
+    submitBtn.disabled = false;
+
+    submitBtn.textContent = currentMode === "register"
+        ? "Create Account →"
+        : "Login to ReLove →";
+}
+});
+
+    </script>
+</body>
+</html>

@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="Relove-favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="aboutus.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='aboutus.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Asset&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Asset&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Arizonia&family=Cedarville+Cursive&display=swap" rel="stylesheet">
-    <link rel="icon" href="Relove-favicon.png" type="image/x-icon">
+    <link rel="icon" href="../static/images/Relove-favicon.png" type="image/x-icon">
     <script src="https://kit.fontawesome.com/cad521f4a5.js" crossorigin="anonymous"></script>
     <title>ReLove/Books</title>
 </head>
@@ -27,13 +27,30 @@
             </div>
             <div id="nav-links">
                 <div id="nav-links-a">
-                    <a  class="links-nav" href="index.html">Home</a>
+                    <a  class="links-nav " href="index.html">Home</a>
                     <a  class="links-nav" href="books.html">Books</a>
                     <a  class="links-nav" href="clothes.html">Clothes</a>
                     <a class="links-nav current-link" href="aboutus.html">About Us</a>
                 </div>
                 <div id="user">
-                    <button id="login-register">Login/Register</button>
+                                    
+                {% if session.get('user_id') %}
+                    <span class="welcome-user">
+                        Welcome
+                    </span>
+
+                    <form action="{{ url_for('logout') }}" method="POST"
+                        style="display: inline;">
+                        <button type="submit" class="login-register">
+                            Logout
+                        </button>
+                    </form>
+                {% else %}
+                    <button id="loginbtn" class="login-register">
+                        Login/Register
+                    </button>
+                {% endif %}
+
                     <i class="fa-regular fa-circle-user user"></i>
                 </div>
             </div>
@@ -41,7 +58,7 @@
     </nav>
     <section class="aboutus-section-1">
         <div class="aboutus-content">
-            <img src="mission-image.png"  class="aboutus-image" alt="mission-image">
+            <img src="../static/images/mission-image.png"  class="aboutus-image" alt="mission-image">
             <div class="aboutus-right">
                 <h1>Our <span>Mission</span></h1>
                 <div class="aboutus-text">

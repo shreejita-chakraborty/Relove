@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon"
+          href="{{ url_for('static', filename='images/Relove-favicon.png') }}"
+          type="image/x-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap"
+          rel="stylesheet">
+
+    <title>Add Product | ReLove</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f0ea;
+            min-height: 100vh;
+            padding: 35px 20px;
+            color: #171717;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            font-family: "Cedarville Cursive", cursive;
+            font-size: 40px;
+            color: rgb(203, 31, 31);
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #777;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            background: white;
+            outline: none;
+            transition: border-color 0.25s, box-shadow 0.25s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #171717;
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+        }
+
+        input[type="file"] {
+            background: #fafafa;
+            cursor: pointer;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .hint {
+            display: block;
+            color: #888;
+            font-size: 12px;
+            margin-top: 7px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #171717;
+            color: white;
+            border: 1px solid #171717;
+            border-radius: 9px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+            margin-top: 5px;
+        }
+
+        .submit-btn:hover {
+            background: white;
+            color: #171717;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 22px;
+            color: #555;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: rgb(203, 31, 31);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+
+        <div class="logo">ReLove</div>
+
+        <h1>Add a Product</h1>
+
+        <p class="subtitle">
+            Give preloved items another life. Add your product details
+            and a clear image so customers can discover it.
+        </p>
+
+        <form action="{{ url_for('add_product') }}"
+              method="POST"
+              enctype="multipart/form-data">
+
+            <div class="form-group">
+                <label for="name">Product name</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="e.g. The Alchemist"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="category">Product category</label>
+                <select id="category" name="category" required>
+                    <option value="books">Books</option>
+                    <option value="clothes">Clothes</option>
+                </select>
+            </div>
+            <div class="form-group" id="genreGroup">
+                <label for="genre">Book genre</label>
+                <select id="genre" name="genre">
+                    <option value="">Select a genre</option>
+                    <option value="Non-fiction">Non-fiction</option>
+                    <option value="Fiction">Fiction</option>
+                    <option value="Thriller">Thriller</option>
+                    <option value="Academic">Academic</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Fantasy">Fantasy</option>
+                </select>
+            </div>
+            <div class="form-group" id="clothingTypeGroup">
+                <label for="clothing_type">Clothing Type</label>
+                <select id="clothing_type" name="clothing_type">
+                    <option value="">Select clothing type</option>
+                    <option value="mens">Men's</option>
+                    <option value="womens">Women's</option>
+                    <option value="unisex">Unisex</option>
+                    <option value="partywear">Partywear</option>
+                    <option value="casual">Casual</option>
+                    <option value="formal">Formal</option>
+                    <option value="accessories">Accessories</option>
+                </select>
+            </div>
+            <div class="form-group" id="sizeGroup">
+                <label for="size">Clothing Size</label>
+                <select id="size" name="size">
+                    <option value="">Select a size</option>
+                    <option value="XS">XS</option>
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                    <option value="XL">XL</option>
+                    <option value="XXL">XXL</option>
+                    <option value="Free Size">Free Size</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea
+                    id="description"
+                    name="description"
+                    placeholder="Describe the item's condition, size, edition, etc."
+                ></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price (₹)</label>
+                <input
+                    type="number"
+                    id="price"
+                    name="price"
+                    placeholder="Enter price"
+                    min="0"
+                    step="0.01"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="stock">Quantity available</label>
+                <input
+                    type="number"
+                    id="stock"
+                    name="stock"
+                    min="1"
+                    value="1"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="image">Product image</label>
+                <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    accept="image/*"
+                    required
+                >
+                <span class="hint">
+                    Choose a clear photo of the product.
+                </span>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Add Product →
+            </button>
+
+        </form>
+
+        <a href="{{ url_for('view_store', shop_id=session['user_id']) }}"
+           class="back-link">
+            ← Back to my store
+        </a>
+
+    </main>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const category = document.getElementById("category");
+    const genreGroup = document.getElementById("genreGroup");
+    const genre = document.getElementById("genre");
+    const sizeGroup = document.getElementById("sizeGroup");
+    const size = document.getElementById("size");
+    const clothingTypeGroup = document.getElementById("clothingTypeGroup");
+    const clothingType = document.getElementById("clothing_type");
+
+    function updateGenre() {
+    const isBook = category.value.toLowerCase() === "books";
+    const isClothes = category.value.toLowerCase() === "clothes";
+
+    genreGroup.style.display = isBook ? "block" : "none";
+    genre.required = isBook;
+
+    clothingTypeGroup.style.display = isClothes ? "block" : "none";
+    clothingType.required = isClothes;
+
+    if (!isBook) genre.value = "";
+    if (!isClothes) clothingType.value = "";
+}
+    category.addEventListener("change", updateGenre);
+    updateGenre();
+});
+</script>
+</body>
+</html>

@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReLove</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Arizonia&family=Cedarville+Cursive&display=swap" rel="stylesheet">
-    <link rel="icon" href="Relove-favicon.png" type="image/x-icon">
+    <link rel="icon" href="../static/images/Relove-favicon.png" type="image/x-icon">
     <script src="https://kit.fontawesome.com/cad521f4a5.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -23,13 +23,30 @@
             </div>
             <div id="nav-links">
                 <div id="nav-links-a">
-                    <a  class="links-nav current-link" href="#home">Home</a>
+                    <a  class="links-nav current-link" href="index.html">Home</a>
                     <a  class="links-nav" href="books.html">Books</a>
                     <a  class="links-nav" href="clothes.html">Clothes</a>
                     <a class="links-nav" href="aboutus.html">About Us</a>
                 </div>
                 <div id="user">
-                    <button id="login-register">Login/Register</button>
+                                    
+                {% if session.get('user_id') %}
+                    <span class="welcome-user">
+                        Welcome
+                    </span>
+
+                    <form action="{{ url_for('logout') }}" method="POST"
+                        style="display: inline;">
+                        <button type="submit" class="login-register">
+                            Logout
+                        </button>
+                    </form>
+                {% else %}
+                    <button id="loginbtn" class="login-register">
+                        Login/Register
+                    </button>
+                {% endif %}
+
                     <i class="fa-regular fa-circle-user user"></i>
                 </div>
             </div>
@@ -66,42 +83,24 @@
                 </div>
             </div>
             <div id="store-cards">
-                <div  class="stores">
-                    <img src="https://lh3.googleusercontent.com/grass-cs/AABkmLcOpfuAJSW_Wi_UH3VYUgCVxRV8Gyuy9uqsq-PZ3K2DVNBvYrm9GeyRHMUjhmbSw9xQRPbgRXB-axDr8r7_r5gdCDotjqO5Xap_7VdD7nV2ITZ27eGV7XlX3b5UJ-10g1rt0NlW=w143-h143-n-k-no" alt="store-1">
-                    <h4 class="store-name">Manvi Book House  <span class="rating">&middot; 5<i class="fa-solid fa-star star"></i></span></h4>
-                    <p class="distance">< 900 m away</p>
-                    <p class="closed"> Closed</p>
-                    <button class="view-store">View Store<i class="fa-solid fa-angle-right right-arrow"></i></button>
-                </div>
-                <div  class="stores">
-                    <img src="https://lh3.googleusercontent.com/grass-cs/AABkmLfhPlOtKBYO3XBb-F6a6mE-zyGBwwjS1gIXp2BhWwHBBQFlctbWV8VyZN1UNfzKytpPUIBkPTwVJLG72ffcYxibuyqpZsG9DmSpLtrNweu3m7XYsdbhB75jg25DaYcmSiUYlx4xFTPsM5nQ=w143-h143-n-k-no" alt="store-2">
-                    <h4 class="store-name">MyPustak Bazaar  <span class="rating">&middot; 5<i class="fa-solid fa-star star"></i></span></h4>
-                    <p class="distance">< 5 km away</p>
-                    <p class="closed"> Closed</p>
-                    <button class="view-store">View Store<i class="fa-solid fa-angle-right right-arrow"></i></button>
-                </div>
-                <div  class="stores">
-                    <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmY9Kck4R-kknwmXvvTMFvMA5B38-CgYHyiDYrWJoqX3Vve2KWbU1ps_OnhLvbAxk1CzZ2DFVZ3fgp8KNFeWi3gqyFEmFD0JxazCyBN_NT_TQipsQGLrNVkbkNF0VeMsg2n8ndFKw=w143-h143-n-k-no" alt="store-3">
-                    <h4 class="store-name">Bhartiya Book Mart  <span class="rating">&middot; 5<i class="fa-solid fa-star star"></i></span></h4>
-                    <p class="distance">< 5 km away</p>
-                    <p class="closed"> Closed</p>
-                    <button class="view-store">View Store<i class="fa-solid fa-angle-right right-arrow"></i></button>
-                </div>
-                <div  class="stores">
-                    <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlE7iVhr4JdxwFA58UYp5tzFJH-qX9d8ji0VwoZRmg57w-BDkVJl7PLLL-97z8fq23zltNzZvtyUDIxA3VPiKncDNLBIDtM9rWknx9SpxyHGLlO9mSNUZWTOIuSAMNPBsft3vvS=w143-h143-n-k-no" alt="store-4">
-                    <h4 class="store-name">Royal Book Depot  <span class="rating">&middot; 5<i class="fa-solid fa-star star"></i></span></h4>
-                    <p class="distance">< 5 km away</p>
-                    <p class="closed"> Closed</p>
-                    <button class="view-store">View Store<i class="fa-solid fa-angle-right right-arrow"></i></button>
-                </div>
-                <div  class="stores">
-                    <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmKqq1Fca2Uph0NKUFtztdsXWa60bnavfRW0OG3WyPDQ4hPMGmKOV1Ze87EWtDK0f5bPSSStO7gIBMJ2hBR_z9cYe-u_4QpEvoeKPALL_rgjGCz6rehydIZ3pX14b7Z9pHROTI=w115-h115-n-k-no" alt="store-5">
-                    <h4 class="store-name">Prem Bookshop <span class="rating">&middot; 5<i class="fa-solid fa-star star"></i></span></h4>
-                    <p class="distance">< 5 km away</p>
-                    <p class="closed"> Closed</p>
-                    <button class="view-store">View Store<i class="fa-solid fa-angle-right right-arrow"></i></button>
-                </div>
+                {% for shop in shops if shop['shop_category'] == 'books' %}
+                <div class="stores">
+                    <img
+                        src="{{ url_for('static', filename='images/stores/store' ~ shop['id'] ~ '.jpg') }}"
+                        alt="{{ shop['shop_name'] }}"
+                        class="store-image"
+                    >
+                    <h4 class="store-name">{{ shop['shop_name'] }}</h4>
+                    <p class="distance">{{ shop['shop_address'] }}</p>
 
+                    <a href="{{ url_for('view_store', shop_id=shop['id']) }}"
+                    class="view-store">
+                        View Store
+                    </a>
+                </div>
+                {% else %}
+                    <p>No bookshops registered yet.</p>
+                {% endfor %}
                 <a  class="view-all" href="books.html#books-section-2">View all <i class="fa-solid fa-angle-right right-arrow"></i></a>
             </div>
         </div>
@@ -115,41 +114,24 @@
                 </div>
             </div>
             <div id="store-cards">
-                <div  class="stores">
-                    <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlA_FsS2ey5Bxl08E3y_OY_UWW39qTtYi0gug4RcgHQZfbmE1RJY_uI5Tw43OaaVUnAzTUr09HTW5KdrQgFTkJLs4OY0fXXVM0M6IBPvBR-jr5HuK4oDdIdQeCMpK0C_yVh67-UyD9MDLGh=w143-h143-n-k-no" alt="store-1">
-                    <h4 class="store-name">Fifth Avenue <span class="rating">&middot; 5<i class="fa-solid fa-star star"></i></span></h4>
-                    <p class="distance">< 900 m away</p>
-                    <p class="closed"> Closed</p>
-                    <button class="view-store">View Store<i class="fa-solid fa-angle-right right-arrow"></i></button>
+                {% for shop in shops if shop['shop_category'] == 'clothes' %}
+                <div class="stores">
+                    <img
+                        src="{{ url_for('static', filename='images/stores/cloth-shop-' ~ shop['id'] ~ '.jpg') }}"
+                        alt="{{ shop['shop_name'] }}"
+                        class="store-image"
+                    >  
+                    <h4 class="store-name">{{ shop['shop_name'] }}</h4>
+                    <p class="distance">{{ shop['shop_address'] }}</p>
+
+                    <a href="{{ url_for('view_store', shop_id=shop['id']) }}"
+                    class="view-store">
+                        View Store
+                    </a>
                 </div>
-                <div  class="stores">
-                    <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlJF7thTuOVXoOM1kSZaJsdJ9-kIMLNvvpU11uZglp84dY3dkMznk9E8KVQsZVyENgW9zEYo_WvMPB4xMW-l-uHdMDM2tZ7eY1tNci4SByslh4iQ7OYLFAygaeIcjF6CIenqC0=w143-h143-n-k-no" alt="store-2">
-                    <h4 class="store-name">Alok Fashion  <span class="rating">&middot; 5<i class="fa-solid fa-star star"></i></span></h4>
-                    <p class="distance">< 5 km away</p>
-                    <p class="closed"> Closed</p>
-                    <button class="view-store">View Store<i class="fa-solid fa-angle-right right-arrow"></i></button>
-                </div>
-                <div  class="stores">
-                    <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkWYOvDR_URDLv9mmgte1O2Oq-fe6H6iKPciWq9_DG64tIFa0l9cgSZRZVo0-kMDQEt24andX-BnG7NEMhtucDZiSLO2gHM4jqTC_MqrmqdPJLn5k3z93IoZgYEjXgEure2aUFbug=w115-h115-n-k-no" alt="store-3">
-                    <h4 class="store-name">The Clothing Bar<span class="rating">&middot; 5<i class="fa-solid fa-star star"></i></span></h4>
-                    <p class="distance">< 5 km away</p>
-                    <p class="closed"> Closed</p>
-                    <button class="view-store">View Store<i class="fa-solid fa-angle-right right-arrow"></i></button>
-                </div>
-                <div  class="stores">
-                    <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmlYtS5ErMPtOQRXS9CgiPXKClO-rm7LbClh4sO1QsYCtrC0AW6qQ8QaCwLuuOj1BuE3qoH8Y9y08AnHgA4ZWO3F0XLjzvPkHpxn4U_h6HYXQbM2Q-nBXlfvwmufIwq9SCf8FS_eBPgFwTG=w115-h115-n-k-no" alt="store-4">
-                    <h4 class="store-name">A1 Fashion<span class="rating">&middot; 5<i class="fa-solid fa-star star"></i></span></h4>
-                    <p class="distance">< 5 km away</p>
-                    <p class="closed"> Closed</p>
-                    <button class="view-store">View Store<i class="fa-solid fa-angle-right right-arrow"></i></button>
-                </div>
-                <div  class="stores">
-                    <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnOi3TNGzZUF5pHYc0YSDrpK8_JrXQQnjxg9Ji8dCjASJhJQOL9xx6fFAijNS_IRRaZ-QeJJnrY4Cmi5On5tnyitajT87JKxB6vujcQ2-j9edCHgbCWHYpWMV8l3SdQIumEajoaHg=w115-h115-n-k-no" alt="store-5">
-                    <h4 class="store-name">Ankita Fashion Collection <span class="rating">&middot; 5<i class="fa-solid fa-star star"></i></span></h4>
-                    <p class="distance">< 5 km away</p>
-                    <p class="closed"> Closed</p>
-                    <button class="view-store">View Store<i class="fa-solid fa-angle-right right-arrow"></i></button>
-                </div>
+                {% else %}
+                    <p>No Clothing shops registered yet.</p>
+                {% endfor %}
 
                 <a  class="view-all" href="clothes.html#clothes-section-2">View all <i class="fa-solid fa-angle-right right-arrow"></i></a>
             </div>
@@ -227,13 +209,7 @@
                     <summary>
                         How do collection points work?<i class="fa-solid fa-angle-down arrow-down"></i></summary>
                     <div class="faq-a">Second hand clothes and books get collected at these stores, from where our delivery partener collects the items and some of those items are upscaled and sold again. </div>
-                </details>
-                <details class="faq-item">
-                    <summary>
-                        How can I sell my books?<i class="fa-solid fa-angle-down arrow-down"></i></summary>
-                    <div class="faq-a">You can visit the nearest ReLove bookstore listed in the website, sell your book and receive ReLove points. </div>
-                </details>
-                
+                </details>                
             </div>
         </div>
     </section>
@@ -241,6 +217,6 @@
     <footer>
         <p id="footer">&copy; 2026 ReLove. All rights reserved.</p>
     </footer>
-    <script src="script.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
