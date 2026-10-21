@@ -379,6 +379,41 @@ def add_to_cart(product_id):
     session["cart"] = cart
 
     return redirect(request.referrer or url_for("home"))
+@app.route("/dashboard")
+def dashboard():
+    if "user_id" not in session:
+        return redirect("/login")
+
+    db = get_db()
+
+    user = db.execute(
+        "SELECT * FROM users WHERE id = ?",
+        (session["user_id"],)
+    ).fetchone()
+
+    products = []
+
+    if user and user["role"] == "shop":
+        products = db.execute(
+            """
+            SELECT * FROM products
+            WHERE shop_id = ?
+            ORDER BY id DESC
+            """,
+            (session["user_id"],)
+        ).fetchall()
+
+    db.close()
+
+    if not user:
+        session.clear()
+        return redirect("/login")
+
+    return render_template(
+        "dashboard.html",
+        user=user,
+        products=products
+    )  
 if   __name__ == "__main__":
     create_table()
     app.run(debug=True)
