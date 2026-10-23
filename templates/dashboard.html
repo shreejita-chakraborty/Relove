@@ -182,6 +182,76 @@
             padding: 25px;
             color: #777;
         }
+        .remove-button{
+            background-color: white;
+            padding: 10px 20px;
+            border: 1px solid black;
+            box-shadow: 2px 1px 5px black;
+            border-radius:20px;
+        }
+        .remove-button:hover{
+            cursor:pointer;
+        }
+        
+        #my-cart {
+            display: block;
+        }
+        #my-cart > h2 {
+            margin-bottom: 20px;
+        }
+
+        #my-cart .cart-items-grid {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        #my-cart .cart-item {
+            flex: 0 0 auto;
+            width: fit-content;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            background: white;
+            width: 100%;
+            min-width: 0;
+        }
+        .cart-item img {
+            width: 80px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+        .cart-item > div {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .cart-item h3,
+        .cart-item p {
+            margin: 0;
+        }
+        @media (max-width: 800px) {
+            #my-cart {
+                grid-template-columns: repeat(2, max-content);
+            }
+        }
+        @media (max-width: 550px) {
+            #my-cart {
+                grid-template-columns: 1fr;
+            }
+        }
+        .cart-total {
+            margin-top: 25px;
+            color:green;
+        }
         footer {
             text-align: center;
             padding: 25px;
@@ -276,6 +346,7 @@
                 <p><strong>Address:</strong> {{ user['shop_address'] }}</p>
                 <p><strong>Phone:</strong> {{ user['phone'] }}</p>
             </div>
+
             <h2 class="section-title">Your Listings</h2>
             {% if products %}
                 <div class="listing-grid">
@@ -313,7 +384,7 @@
         {% else %}
             <section class="hero">
                 <div>
-                    <h2>Give preloved items another life 🌿</h2>
+                    <h2>Give preloved items another life </h2>
                     <p>
                         Explore affordable books and clothing,
                         discover local stores, and shop more sustainably.
@@ -322,20 +393,55 @@
                 <a href="{{ url_for('books') }}"
                    class="btn btn-light">Explore Products</a>
             </section>
+            <section id="my-cart">
+                <h2><i class="fa-solid fa-cart-shopping"></i> My Cart</h2>
+                {% if cart_items %}
+                <div class="cart-items-grid">
+                    {% for item in cart_items %}
+                        <div class="cart-item">
+                            {% if item['image'] %}
+                                <img
+                                    src="{{ url_for('static', filename='images/products/' ~ item['image']) }}"
+                                    alt="{{ item['name'] }}"
+                                    width="80">
+                            {% endif %}
+
+                            <div>
+                                <h3>{{ item['name'] }}</h3>
+                                <p>Price: ₹{{ item['price'] }}</p>
+                                <p>Quantity: {{ item['quantity'] }}</p>
+                                <p>Subtotal: ₹{{ "%.2f"|format(item['subtotal']) }}</p>
+
+                                <form method="POST"
+                                    action="{{ url_for('remove_from_cart', product_id=item['id']) }}">
+                                    <button type="submit" class="remove-button">
+                                        <i class="fa-solid fa-trash"></i> Remove
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                {% endfor %}
+                </div>
+
+                <h3 class="cart-total">Total: ₹{{ "%.2f"|format(total) }}</h3>
+                    {% else %}
+                        <p>Your cart is empty. Explore stores to add products!</p>
+                    {% endif %}
+            </section>
             <h2 class="section-title">Explore ReLove</h2>
             <div class="quick-links">
                 <a href="{{ url_for('books') }}" class="quick-card">
-                    <span class="emoji">📚</span>
+                    <span class="emoji"><i class="fa-solid fa-book"></i></span>
                     <h3>Explore Books</h3>
                     <p>Find preloved books from ReLove-listed stores.</p>
                 </a>
                 <a href="{{ url_for('clothes') }}" class="quick-card">
-                    <span class="emoji">👕</span>
+                    <span class="emoji"><i class="fa-solid fa-shirt"></i></span>
                     <h3>Explore Clothes</h3>
                     <p>Discover preloved fashion at affordable prices.</p>
                 </a>
-                <a href="{{ url_for('aboutus') }}" class="quick-card">
-                    <span class="emoji">🌱</span>
+                <a href="{{ url_for('about') }}" class="quick-card">
+                    <span class="emoji"><i class="fa-solid fa-seedling"></i></span>
                     <h3>About ReLove</h3>
                     <p>Learn how reuse helps reduce waste.</p>
                 </a>

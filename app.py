@@ -1,13 +1,12 @@
 import os
 from werkzeug.utils import secure_filename
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for,abort
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for,abort, flash
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.secret_key = "relove-prototype-secret-key-change-later"
 DATABASE = "relove.db"
-
 def get_db():
     db = sqlite3.connect(DATABASE)
     db.row_factory = sqlite3.Row
@@ -135,7 +134,6 @@ def clothes():
 @app.route("/aboutus.html")
 def about():
     return render_template("aboutus.html")
-
 @app.route("/login")
 @app.route("/login.html")
 def login():
@@ -144,7 +142,6 @@ def login():
 @app.route("/api/register", methods=["POST"])
 def register():
     data = request.get_json(silent=True) or {}
-
     full_name = data.get("fullName", "").strip()
     email = data.get("email", "").strip().lower()
     password = data.get("password", "")
@@ -154,13 +151,11 @@ def register():
     if role == "shop"
     else None
     )
-
     if not full_name or not email or len(password) < 8:
         return jsonify(
             success=False,
             message="Enter your name, a valid email, and a password of at least 8 characters."
         ), 400
-
     if role not in ("customer", "shop"):
         return jsonify(success=False, message="Invalid account type."), 400
 
@@ -173,7 +168,6 @@ def register():
     if role == "shop"
     else None
     )
-
     if role == "shop" and not all([shop_name, shop_address, phone]):
         return jsonify(
             success=False,
@@ -194,32 +188,26 @@ def register():
                 shop_name, gst_number, shop_address, phone,
                 shop_category
             ))
-
         return jsonify(
             success=True,
-            message="Account created! You can now log in."
-        )
-
+            message="Account created! You can now log in.")
     except sqlite3.IntegrityError:
         return jsonify(
             success=False,
             message="An account with this email already exists."
         ), 409
-
+    
 @app.route("/api/login", methods=["POST"])
 def login_user():
     data = request.get_json(silent=True) or {}
-
     email = data.get("email", "").strip().lower()
     password = data.get("password", "")
     role = data.get("role", "")
-
     with get_db() as db:
         user = db.execute(
             "SELECT * FROM users WHERE email = ?",
             (email,)
         ).fetchone()
-
     if (
         user is None
         or role not in ("customer", "shop")
@@ -230,17 +218,13 @@ def login_user():
             success=False,
             message="Incorrect email, password, or account type."
         ), 401
-
     session["user_id"] = user["id"]
     session["user_role"] = user["role"]
     session["user_name"] = user["full_name"]
-
     return jsonify(
         success=True,
         message="Login successful! Welcome back.",
-        redirect="/"
-    )
-
+        redirect="/")
 @app.route("/logout", methods=["POST"])
 def logout():
     session.clear()
@@ -249,24 +233,18 @@ def logout():
 def view_store(shop_id):
     conn = get_db()
     cursor = conn.cursor()
-
     cursor.execute(
         "SELECT id, shop_name, shop_address FROM users WHERE id = ? AND role = 'shop'",
-        (shop_id,)
-    )
+        (shop_id,))
     shop = cursor.fetchone()
-
     if shop is None:
         conn.close()
         abort(404)
-
     cursor.execute(
         "SELECT * FROM products WHERE shop_id = ?",
-        (shop_id,)
-    )
+        (shop_id,))
     products = cursor.fetchall()
     conn.close()
-
     return render_template(
         "store.html",
         shop=shop,
@@ -276,7 +254,6 @@ def view_store(shop_id):
 def add_product():
     if session.get("user_role") != "shop":
         return redirect(url_for("login"))
-
     if request.method == "POST":
         name = request.form.get("name", "").strip()
         category = request.form.get("category", "").strip()
@@ -286,10 +263,8 @@ def add_product():
         description = request.form.get("description", "").strip()
         price = request.form.get("price", type=float)
         stock = request.form.get("stock", type=int)
-
         if not name or category not in ("books", "clothes"):
             return "Invalid product details", 400
-
         if price is None or price < 0 or stock is None or stock < 1:
             return "Invalid price or quantity", 400
         if category == "clothes" and not clothing_type:
@@ -297,13 +272,11 @@ def add_product():
             return "Please select a clothing type.", 400
         conn = get_db()
         cursor = conn.cursor()
-
         cursor.execute(
             "SELECT shop_category FROM users WHERE id = ? AND role = 'shop'",
             (session["user_id"],)
         )
         shop = cursor.fetchone()
-
         if shop is None or shop["shop_category"] != category:
             conn.close()
             return "Product category must match your shop category.", 400
@@ -321,16 +294,13 @@ def add_product():
         if not filename:
             conn.close()
             return "Invalid image filename.", 400
-
         image_name = f"{session['user_id']}_{filename}"
         upload_folder = os.path.join(app.static_folder, "images", "products")
         os.makedirs(upload_folder, exist_ok=True)
-
         image_file.save(os.path.join(upload_folder, image_name))
         print("UPLOAD FOLDER:", upload_folder)
         print("SAVED IMAGE:", os.path.join(upload_folder, image_name))
         print("FILE EXISTS:", os.path.exists(os.path.join(upload_folder, image_name)))
-
         try:
             cursor.execute("""
                     INSERT INTO products
@@ -347,11 +317,9 @@ def add_product():
             raise
         else:
             conn.close()
-
         return redirect(url_for(
             "view_store", shop_id=session["user_id"]
         ))
-
     return render_template("addproduct.html")
 @app.route("/add-to-cart/<int:product_id>", methods=["POST"])
 def add_to_cart(product_id):
@@ -360,25 +328,31 @@ def add_to_cart(product_id):
             "SELECT id, stock FROM products WHERE id = ?",
             (product_id,)
         ).fetchone()
-
     if product is None:
         abort(404)
-
     if product["stock"] < 1:
         return "This product is out of stock.", 400
-
     cart = session.get("cart", {})
     product_key = str(product_id)
-
     current_quantity = cart.get(product_key, 0)
-
     if current_quantity >= product["stock"]:
         return "You have added all available stock.", 400
-
     cart[product_key] = current_quantity + 1
     session["cart"] = cart
+    flash(" Item added to your cart successfully!", "success")
+    return redirect(request.referrer or url_for("books"))
 
-    return redirect(request.referrer or url_for("home"))
+
+@app.route("/remove-from-cart/<int:product_id>", methods=["POST"])
+def remove_from_cart(product_id):
+    cart = session.get("cart", {})
+    cart.pop(str(product_id), None)
+
+    session["cart"] = cart
+    session.modified = True
+
+    return redirect(url_for("dashboard"))
+
 @app.route("/dashboard")
 def dashboard():
     if "user_id" not in session:
@@ -402,7 +376,22 @@ def dashboard():
             """,
             (session["user_id"],)
         ).fetchall()
+    cart_items = []
+    total = 0
 
+    for product_id, quantity in session.get("cart", {}).items():
+        product = db.execute(
+            "SELECT * FROM products WHERE id = ?",
+            (int(product_id),)
+        ).fetchone()
+
+        if product and product["stock"] > 0:
+            item = dict(product)
+            item["quantity"] = min(int(quantity), item["stock"])
+            item["subtotal"] = item["price"] * item["quantity"]
+
+            cart_items.append(item)
+            total += item["subtotal"]
     db.close()
 
     if not user:
@@ -410,10 +399,12 @@ def dashboard():
         return redirect("/login")
 
     return render_template(
-        "dashboard.html",
-        user=user,
-        products=products
-    )  
+    "dashboard.html",
+    user=user,
+    products=products,
+    cart_items=cart_items,
+    total=total
+)
 if   __name__ == "__main__":
     create_table()
     app.run(debug=True)

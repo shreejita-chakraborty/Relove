@@ -47,8 +47,7 @@
                         Login/Register
                     </button>
                 {% endif %}
-
-                    <i class="fa-regular fa-circle-user user"></i>
+                    <a href="{{ url_for('dashboard') }}"><i class="fa-regular fa-circle-user user"></i></a>
                 </div>
             </div>
         </div>
@@ -166,10 +165,20 @@
                             <p class="distance">{{ product["shop_name"] }}</p>
                         </div>
                         <div class="stores-button">
-                            <button class="addtocart" type="button">
-                                Add to Cart
-                                <i class="fa-solid fa-cart-shopping cart"></i>
-                            </button>
+                            {% if session.get('user_id') and session.get('user_role') not in ['shop', 'shop_owner'] %}
+                                <form action="{{ url_for('add_to_cart', product_id=product['id']) }}"
+                                    method="POST">
+                                    <button type="submit" class="addtocart"
+                                            {% if product['stock'] < 1 %}disabled{% endif %}>
+                                        Add to Cart
+                                        <i class="fa-solid fa-cart-shopping cart"></i>
+                                    </button>
+                                </form>
+                            {% elif not session.get('user_id') %}
+                                <a href="{{ url_for('login') }}" class="addtocart">
+                                    <i class="fa-solid fa-user"></i> Login to Add
+                                </a>
+                            {% endif %}
                             <a class="view-store"
                             href="{{ url_for('view_store', shop_id=product['shop_id']) }}">
                                 View Store
@@ -209,17 +218,25 @@
                             <p class="condition">{{ product["description"] or "Preloved clothing" }}</p>
                             <p class="distance">{{ product["shop_name"] }}</p>
                         </div>
-                        <div class="stores-button">
-                            <button class="addtocart" type="button">
-                                Add to Cart
-                                <i class="fa-solid fa-cart-shopping cart"></i>
-                            </button>
-                            <a class="view-store"
-                            href="{{ url_for('view_store', shop_id=product['shop_id']) }}">
-                                View Store
-                                <i class="fa-solid fa-angle-right right-arrow"></i>
-                            </a>
-                        </div>
+                       <div class="stores-button">
+                                {% if session.get('user_id') and session.get('user_role') not in ['shop', 'shop_owner'] %}
+                                    <form action="{{ url_for('add_to_cart', product_id=product['id']) }}"
+                                        method="POST">
+                                        <button type="submit" class="addtocart"
+                                                {% if product['stock'] < 1 %}disabled{% endif %}>
+                                            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                        </button>
+                                    </form>
+                                {% elif not session.get('user_id') %}
+                                    <a href="{{ url_for('login') }}" class="addtocart">
+                                        <i class="fa-solid fa-user"></i> Login to Add
+                                    </a>
+                                {% endif %}
+                                <a class="view-store"
+                                href="{{ url_for('view_store', shop_id=product['shop_id']) }}">
+                                    View Store <i class="fa-solid fa-angle-right right-arrow"></i>
+                                </a>
+                            </div>
                     </div>
                 </div>
                 {% else %}
@@ -254,16 +271,24 @@
                             <p class="distance">{{ product["shop_name"] }}</p>
                         </div>
                         <div class="stores-button">
-                            <button class="addtocart" type="button">
-                                Add to Cart
-                                <i class="fa-solid fa-cart-shopping cart"></i>
-                            </button>
-                            <a class="view-store"
-                            href="{{ url_for('view_store', shop_id=product['shop_id']) }}">
-                                View Store
-                                <i class="fa-solid fa-angle-right right-arrow"></i>
-                            </a>
-                        </div>
+                                {% if session.get('user_id') and session.get('user_role') not in ['shop', 'shop_owner'] %}
+                                    <form action="{{ url_for('add_to_cart', product_id=product['id']) }}"
+                                        method="POST">
+                                        <button type="submit" class="addtocart"
+                                                {% if product['stock'] < 1 %}disabled{% endif %}>
+                                            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                        </button>
+                                    </form>
+                                {% elif not session.get('user_id') %}
+                                    <a href="{{ url_for('login') }}" class="addtocart">
+                                        <i class="fa-solid fa-user"></i> Login to Add
+                                    </a>
+                                {% endif %}
+                                <a class="view-store"
+                                href="{{ url_for('view_store', shop_id=product['shop_id']) }}">
+                                    View Store <i class="fa-solid fa-angle-right right-arrow"></i>
+                                </a>
+                            </div>
                     </div>
                 </div>
                 {% else %}

@@ -47,8 +47,7 @@
                         Login/Register
                     </button>
                 {% endif %}
-
-                    <i class="fa-regular fa-circle-user user"></i>
+                    <a href="{{ url_for('dashboard') }}"><i class="fa-regular fa-circle-user user"></i></a>
                 </div>
             </div>
         </div>
@@ -126,11 +125,8 @@
                         <h4 class="store-name">
                             {{ shop['shop_name'] }}
                         </h4>
-
                         <p class="distance">{{ shop['shop_address'] }}</p>
-
                         <p class="closed">Status unavailable</p>
-
                         <a href="{{ url_for('view_store', shop_id=shop['id']) }}"
                         class="view-store">
                             View Store <i class="fa-solid fa-angle-right right-arrow"></i>
@@ -164,22 +160,27 @@
                                 <h3 class="book-name">{{ product["name"] }}</h3>
                                 <p class="price">₹{{ product["price"] }}</p>
                             </div>
-
                             <div class="more-details">
                                 <p class="condition">{{ product["genre"] or "Preloved book" }}</p>
                                 <p class="distance">{{ product["shop_name"] }}</p>
                             </div>
-
                             <div class="stores-button">
-                                <button class="addtocart" type="button">
-                                    Add to Cart
-                                    <i class="fa-solid fa-cart-shopping cart"></i>
-                                </button>
-
+                                {% if session.get('user_id') and session.get('user_role') not in ['shop', 'shop_owner'] %}
+                                    <form action="{{ url_for('add_to_cart', product_id=product['id']) }}"
+                                        method="POST">
+                                        <button type="submit" class="addtocart"
+                                                {% if product['stock'] < 1 %}disabled{% endif %}>
+                                            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                        </button>
+                                    </form>
+                                {% elif not session.get('user_id') %}
+                                    <a href="{{ url_for('login') }}" class="addtocart">
+                                        <i class="fa-solid fa-user"></i> Login to Add
+                                    </a>
+                                {% endif %}
                                 <a class="view-store"
                                 href="{{ url_for('view_store', shop_id=product['shop_id']) }}">
-                                    View Store
-                                    <i class="fa-solid fa-angle-right right-arrow"></i>
+                                    View Store <i class="fa-solid fa-angle-right right-arrow"></i>
                                 </a>
                             </div>
                         </div>
@@ -211,22 +212,27 @@
                                 <h3 class="book-name">{{ product["name"] }}</h3>
                                 <p class="price">₹{{ product["price"] }}</p>
                             </div>
-
                             <div class="more-details">
                                 <p class="condition">{{ product["genre"] or "Preloved book" }}</p>
                                 <p class="distance">{{ product["shop_name"] }}</p>
                             </div>
-
                             <div class="stores-button">
-                                <button class="addtocart" type="button">
-                                    Add to Cart
-                                    <i class="fa-solid fa-cart-shopping cart"></i>
-                                </button>
-
+                                {% if session.get('user_id') and session.get('user_role') not in ['shop', 'shop_owner'] %}
+                                    <form action="{{ url_for('add_to_cart', product_id=product['id']) }}"
+                                        method="POST">
+                                        <button type="submit" class="addtocart"
+                                                {% if product['stock'] < 1 %}disabled{% endif %}>
+                                            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                        </button>
+                                    </form>
+                                {% elif not session.get('user_id') %}
+                                    <a href="{{ url_for('login') }}" class="addtocart">
+                                        <i class="fa-solid fa-user"></i> Login to Add
+                                    </a>
+                                {% endif %}
                                 <a class="view-store"
                                 href="{{ url_for('view_store', shop_id=product['shop_id']) }}">
-                                    View Store
-                                    <i class="fa-solid fa-angle-right right-arrow"></i>
+                                    View Store <i class="fa-solid fa-angle-right right-arrow"></i>
                                 </a>
                             </div>
                         </div>
@@ -265,15 +271,22 @@
                             </div>
 
                             <div class="stores-button">
-                                <button class="addtocart" type="button">
-                                    Add to Cart
-                                    <i class="fa-solid fa-cart-shopping cart"></i>
-                                </button>
-
+                                {% if session.get('user_id') and session.get('user_role') not in ['shop', 'shop_owner'] %}
+                                    <form action="{{ url_for('add_to_cart', product_id=product['id']) }}"
+                                        method="POST">
+                                        <button type="submit" class="addtocart"
+                                                {% if product['stock'] < 1 %}disabled{% endif %}>
+                                            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                        </button>
+                                    </form>
+                                {% elif not session.get('user_id') %}
+                                    <a href="{{ url_for('login') }}" class="addtocart">
+                                        <i class="fa-solid fa-user"></i> Login to Add
+                                    </a>
+                                {% endif %}
                                 <a class="view-store"
                                 href="{{ url_for('view_store', shop_id=product['shop_id']) }}">
-                                    View Store
-                                    <i class="fa-solid fa-angle-right right-arrow"></i>
+                                    View Store <i class="fa-solid fa-angle-right right-arrow"></i>
                                 </a>
                             </div>
                         </div>
